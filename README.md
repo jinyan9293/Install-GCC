@@ -8,36 +8,28 @@ How to install GCC on Linux without root
   GMP为“GNU MP Bignum Library”的缩写，是一个GNU开源数学运算库。本文选择的是最新版本gmp-6.1.2，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/gmp/
-  
   2) http://mirrors.nju.edu.cn/gnu/gmp/
-  
   3) http://mirrors.ustc.edu.cn/gnu/gmp/
   
   1.2. mpfr库
   mpfr是一个GNU开源大数运算库，它依赖gmp。本文选择的是最新版本mpfr-4.0.2，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/mpfr/
-  
   2) http://mirrors.nju.edu.cn/gnu/mpfr/
-  
   3) http://mirrors.ustc.edu.cn/gnu/mpfr/
   
   1.3. mpc库
   mpc是GNU的开源复杂数字算法，它依赖gmp和mpfr。本文选择的是最新版本mpc-1.1.0，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/mpc/
-  
   2) http://mirrors.nju.edu.cn/gnu/mpc/
-  
   3) http://mirrors.ustc.edu.cn/gnu/mpc/
   
   1.4. m4编译工具
   本文选择的是最新版本m4-1.4.16，下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/m4/
-  
-  2) http://mirrors.nju.edu.cn/gnu/m4/
-  
+  2) http://mirrors.nju.edu.cn/gnu/m4/  
   3) http://mirrors.ustc.edu.cn/gnu/m4/
 
   1.5. 安装源代码包
@@ -63,10 +55,16 @@ How to install GCC on Linux without root
   为了不污染已有的编译和运行环境，将GCC及依赖库均安装到/usr/local或/usr/software指定目录， gcc安装时指定依赖库目录需要单独存放（即依赖库分别安装到不同的指定目录下），如果依赖库安装在同一个目录下gcc configure步骤可能会报错。
 
 #### 2. 编译安装依赖库
-2.1. 编译安装gmp：    
-执行configure生成Makefile时，需要用到m4，一般路径为/usr/bin/m4，如果没有则需要先安装，否则报错“no usable m4”错误。
+2.1. 编译安装m4
 
-具体安装步骤如下：
+    tar zxf m4-1.4.20.tar.gz
+    cd m4-1.4.20
+    ./configure --prefix=/usr/program
+    make
+    make install
+  
+2.2. 编译安装gmp：    
+执行configure生成Makefile时，需要用到m4，一般路径为/usr/bin/m4，如果没有则需要先安装，否则报错“no usable m4”错误。
 
     tar zxf gmp-6.3.0.tar.gz
     cd gmp-6.3.0
@@ -74,8 +72,7 @@ How to install GCC on Linux without root
     make
     make install
 
-2.2. 编译安装mpfr
-详细安装步骤如下：
+2.3. 编译安装mpfr
 
     tar xzf  mpfr-4.2.2.tar.gz
     cd mpfr-4.2.2
@@ -83,7 +80,7 @@ How to install GCC on Linux without root
     make
     make install
 
-2.3. 编译安装mpc
+2.4. 编译安装mpc
 
     tar xzf  mpc-1.3.1.tar.gz
     cd mpc-1.3.1
