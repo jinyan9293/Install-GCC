@@ -5,21 +5,21 @@ How to install GCC on Linux without root
 编译之前需先安装好GCC的依赖库：gmp、mpfr和mpc。编译还依赖m4等编译工具，如果没有，则在执行configue时会报相应的错误，这时需要先安装好这些编译工具。
 
   1.1. gmp库   
-  GMP为“GNU MP Bignum Library”的缩写，是一个GNU开源数学运算库。本文选择的是最新版本gmp-6.1.2，国内镜像下载地址：
+  GMP为“GNU MP Bignum Library”的缩写，是一个GNU开源数学运算库，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/gmp/
   2) http://mirrors.nju.edu.cn/gnu/gmp/
   3) http://mirrors.ustc.edu.cn/gnu/gmp/
   
   1.2. mpfr库
-  mpfr是一个GNU开源大数运算库，它依赖gmp。本文选择的是最新版本mpfr-4.0.2，国内镜像下载地址：
+  mpfr是一个GNU开源大数运算库，它依赖gmp，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/mpfr/
   2) http://mirrors.nju.edu.cn/gnu/mpfr/
   3) http://mirrors.ustc.edu.cn/gnu/mpfr/
   
   1.3. mpc库
-  mpc是GNU的开源复杂数字算法，它依赖gmp和mpfr。本文选择的是最新版本mpc-1.1.0，国内镜像下载地址：
+  mpc是GNU的开源复杂数字算法，它依赖gmp和mpfr，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/mpc/
   2) http://mirrors.nju.edu.cn/gnu/mpc/
