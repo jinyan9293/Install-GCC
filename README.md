@@ -4,7 +4,7 @@ How to install GCC on Linux without root
 #### 1. GCC及其依赖库  
 编译之前需先安装好GCC的依赖库：gmp、mpfr和mpc。编译还依赖m4等编译工具，如果没有，则在执行configue时会报相应的错误，这时需要先安装好这些编译工具。
 
-  1.1. gmp库
+  1.1. gmp库   
   GMP为“GNU MP Bignum Library”的缩写，是一个GNU开源数学运算库。本文选择的是最新版本gmp-6.1.2，国内镜像下载地址：
   
   1) https://mirrors.tuna.tsinghua.edu.cn/gnu/gmp/
@@ -63,7 +63,7 @@ How to install GCC on Linux without root
   为了不污染已有的编译和运行环境，将GCC及依赖库均安装到/usr/local或/usr/software指定目录， gcc安装时指定依赖库目录需要单独存放（即依赖库分别安装到不同的指定目录下），如果依赖库安装在同一个目录下gcc configure步骤可能会报错。
 
 #### 2. 编译安装依赖库
-2.1. 编译安装gmp：
+2.1. 编译安装gmp：    
 执行configure生成Makefile时，需要用到m4，一般路径为/usr/bin/m4，如果没有则需要先安装，否则报错“no usable m4”错误。
 
 具体安装步骤如下：
