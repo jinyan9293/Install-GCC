@@ -1,7 +1,7 @@
 # Install-GCC
 How to install GCC on Linux without root
 
-#### 1. GCC的依赖库  
+#### 1. GCC及其依赖库  
 编译之前需先安装好GCC的依赖库：gmp、mpfr和mpc。编译还依赖m4等编译工具，如果没有，则在执行configue时会报相应的错误，这时需要先安装好这些编译工具。
 
   1.1. gmp库
@@ -40,7 +40,7 @@ How to install GCC on Linux without root
   
   3) http://mirrors.ustc.edu.cn/gnu/m4/
 
-  4.5. 安装源代码包
+  1.5. 安装源代码包
   涉及到的所有安装源代码包：
     
     mkdir gcc
@@ -52,73 +52,60 @@ How to install GCC on Linux without root
     wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-10.1.0/gcc-10.1.0.tar.gz
    
   
-  GCC的依赖库间还互有依赖：mpfr依赖gmp、mpc依赖gmp和mpfr，所以GCC的编译安装顺序为：
+  1.6. GCC的依赖库间还互有依赖：mpfr依赖gmp、mpc依赖gmp和mpfr，所以GCC的编译安装顺序为：
   
   1) m4（如果需要）
-  
   2) gmp
-  
   3) mpfr
-  
   4) mpc
-  
   5) GCC
 
- 
+  为了不污染已有的编译和运行环境，将GCC及依赖库均安装到/usr/local或/usr/software指定目录， gcc安装时指定依赖库目录需要单独存放（即依赖库分别安装到不同的指定目录下），如果依赖库安装在同一个目录下gcc configure步骤可能会报错。
 
-为了不污染已有的编译和运行环境，将GCC及依赖库均安装到/usr/local目录，并且最好以root用户完成下述所有操作。
-
-5. 编译安装gmp
-执行configure生成Makefile时，需要用到m4，一般路径为/usr/bin/m4，如果没有则需要先安装，否则报错“no usable m4”错误，手工安装m4从“https://www.gnu.org/software/m4/”下载。
+#### 2. 编译安装依赖库
+2.1. 编译安装gmp：
+执行configure生成Makefile时，需要用到m4，一般路径为/usr/bin/m4，如果没有则需要先安装，否则报错“no usable m4”错误。
 
 具体安装步骤如下：
 
-xz -d gmp-6.1.2.tar.xz
+    tar zxf gmp-6.3.0.tar.gz
+    cd gmp-6.3.0
+    ./configure --prefix=/usr/software/gmp
+    make
+    make install
 
-tar xf gmp-6.1.2.tar
-
-cd gmp-6.1.2
-
-./configure --prefix=/usr/local/gmp-6.1.2
-
-make
-
-make install
-
-ln -s /usr/local/gmp-6.1.2 /usr/local/gmp
-
-6. 编译安装mpfr
+2.2. 编译安装mpfr
 详细安装步骤如下：
 
-tar xzf  mpfr-4.0.2.tar.gz
+    tar xzf  mpfr-4.2.2.tar.gz
+    cd mpfr-4.2.2
+    ./configure --prefix=/usr/software/mpfr --with-gmp=/usr/software/gmp
+    make
+    make install
 
-cd mpfr-4.0.2
+2.3. 编译安装mpc
 
-./configure --prefix=/usr/local/mpfr-4.0.2 --with-gmp=/usr/local/gmp
+    tar xzf  mpc-1.3.1.tar.gz
+    cd mpc-1.3.1
+    ./configure --prefix=/usr/software/mpc --with-gmp=/usr/software/gmp --with-mpfr=/usr/software/mpfr
+    make
+    make install
 
-make
-
-make install
-
-ln -s /usr/local/mpfr-4.0.2 /usr/local/mpfr
-
-7. 编译安装mpc
-tar xzf  mpc-1.1.0.tar.gz
-
-cd mpc-1.1.0
-
-./configure --prefix=/usr/local/mpc-1.1.0 --with-gmp=/usr/local/gmp --with-mpfr=/usr/local/mpfr
-
-make
-
-make install
-
-ln -s /usr/local/mpc-1.1.0 /usr/local/mpc
-
-8. 设置LD_LIBRARY_PATH
+#### 3. 设置LD_LIBRARY_PATH
 在编译GCC之前，如果不设置LD_LIBRARY_PATH（如果编译gmp时没有指定“--prefix”时安装，一般不用再显示设置），则可能编译时报“error while loading shared libraries: libmpfr.so.6: cannot open shared object file: No such file or directory”等错误。
 
-export LD_LIBRARY_PATH=/usr/local/gmp/lib:/usr/local/mpfr/lib:/usr/local/mpc/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/usr/software/gmp/lib:/usr/software/mpfr/lib:/usr/software/mpc/lib:$LD_LIBRARY_PATH
 
-9. 编译安装gcc
+#### 4. 编译安装gcc
 在执行make编译GCC时，有些费时，请耐心等待。在一台Intel Xeon 2.30GHz的48核128GB内存机器上花费228分钟（将近4个小时，同台机器编译9.1.0花费190分钟），编译GCC-8.3.0的GCC版本为4.8.5（64位）。
+
+    tar xzf gcc-10.1.0.tar.gz
+    cd gcc-10.1.0
+    ./configure --prefix=/usr/local/gcc --with-gmp=/usr/software/gmp --with-mpfr=/usr/software/mpfr --with-mpc=/usr/software/mpc
+    make  
+    make install
+    ln -s /usr/local/gcc /usr/local/gcc
+    export PATH=/usr/local/gcc/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/gcc/lib64:$LD_LIBRARY_PATH
+    export MANPATH=/usr/local/gcc/share/man:$MANPATH
+    gcc --version
